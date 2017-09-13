@@ -22,21 +22,36 @@
 	<meta name="description" content="{exp:stash:get name="safe-description"}" class="entry-summary">
 	<meta name="author" content="{embed="embeds/article-authors-no-html" entry_author="{author}" entry_username="{username}" entry_id="{entry_id}"}">
 
+	{if article_responsive_illo}
+	<meta name="twitter:card" content="summary_large_image">
+	{if:else}
 	<meta name="twitter:card" content="summary">
+	{/if}
+
 	<meta name="twitter:site" content="@alistapart">
 	<meta name="twitter:title" content="{title}">
 	<meta name="twitter:description" content="{exp:stash:get name="safe-description"}">
 	<meta name="twitter:url" content="{site_url}/article/{url_title}">
 
 	{if article_responsive_illo}
-	<meta name="twitter:image" content="{exp:ce_img:pair src='{cell_1}' width='348' crop='no' save_type='jpg' quality='81'}{made}{/exp:ce_img:pair}" />
-	<meta name="twitter:image:alt" content="{if article_illo_description}{article_illo_description}{if:else}Illustration for the {title} article {/if}" />
+	{article_responsive_illo}
+	{if "{cell_1}{width}{/cell_1}" > "{cell_1}{height}{/cell_1}"}
+	<meta name="twitter:image" content="{exp:ce_img:pair src='{cell_1}' width='960' max_height='480' crop='no' save_type='jpg' quality='81'}{made}{/exp:ce_img:pair}" />
+	{if:else}
+	<meta name="twitter:image" content="{exp:ce_img:pair src='{cell_1}' height='960' crop='no' save_type='jpg' quality='81'}{made}{/exp:ce_img:pair}" />
 	{/if}
+	{/article_responsive_illo}
+	{if:else}
+	<meta name="twitter:image" content="https://alistapart.com/components/assets/img/ALA-laurel.png" />
+	{/if}
+	<meta name="twitter:image:alt" content="{if article_illo_description}{article_illo_description}{if:else}Illustration for the {title} article {/if}" />
 
 	<meta property="og:title" content="{title}" />
 	<meta property="og:description" content="{exp:stash:get name="safe-description"}" />
 	<meta property="og:url" content="{site_url}/article/{url_title}" />
+	{if article_responsive_illo}
 	<meta property="og:image" content="{article_responsive_illo}{cell_1}{url}{/cell_1}{/article_responsive_illo}" />
+	{/if}
 
 </head>
 
